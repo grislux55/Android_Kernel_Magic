@@ -1,2 +1,2 @@
 # Android_Kernel_Magic
-Android内核编译从入门到爆炸
+### [一、入门简介](https://github.com/grislux55/Android_Kernel_Magic/blob/master/01Beginning.md)
