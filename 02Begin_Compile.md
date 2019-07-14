@@ -109,11 +109,13 @@ Clang:
 #!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
+cd [配置文件输出脚本中的输出路径]
 make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 GCC:
 #!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
+cd [配置文件输出脚本中的输出路径]
 make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 ```
 
