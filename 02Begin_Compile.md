@@ -42,13 +42,13 @@ AArch64 GNU/Linux target (aarch64-linux-gnu)
   - Clang:
 ```
 #!/bin/sh
-export PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:$PATH"
+export PATH=[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:$PATH
 ```
 
   - GCC
 ```
 #!/bin/sh
-export PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:$PATH"
+export PATH=[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:$PATH
 ```
 - 保存
 ### 3.编写编译脚本
