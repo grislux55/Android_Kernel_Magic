@@ -40,11 +40,17 @@ AArch64 GNU/Linux target (aarch64-linux-gnu)
 - 新建一个.sh文件
 - 在文件中输入以下内容：
   - Clang:
-  > export PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}"
+```
+#!/bin/sh
+export PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}"
+```
 
   - GCC
-  > export PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:PATH"
-3. 保存
+```
+#!/bin/sh
+export PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:PATH"
+```
+- 保存
 ### 3.编写编译脚本
 
 - 问题：
@@ -59,11 +65,13 @@ PS：不要说用环境变量，有些内核在makefile里面用`=`定义了变�
   - 在文件中输入以下内容：
 ```
 Clang:
+#!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- clean
 make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
 GCC:
+#!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 make ARCH=[目标内核架构] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- clean
@@ -81,10 +89,12 @@ make ARCH=[目标内核架构] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu
   - 在文件中输入以下内容：
 ```
 Clang:
+#!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
 GCC:
+#!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
@@ -96,10 +106,12 @@ make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[�
   - 在文件中输入以下内容：
 ```
 Clang:
+#!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 GCC:
+#!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
