@@ -57,11 +57,16 @@ PS：不要说用环境变量，有些内核在makefile里面用`=`定义了变�
 1. 项目清理脚本
   - 新建一个.sh文件
   - 在文件中输入以下内容：
-  ```
-  sh [配置交叉编译工具链时建立的脚本]
-  cd [你的项目]
-  make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
-  ```
+```
+Clang:
+sh [配置交叉编译工具链时建立的脚本]
+cd [你的项目]
+make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
+GCC:
+sh [配置交叉编译工具链时建立的脚本]
+cd [你的项目]
+make ARCH=[目标内核架构] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
+```
   
 2. 配置文件输出脚本
   - 问题：
@@ -72,21 +77,31 @@ PS：不要说用环境变量，有些内核在makefile里面用`=`定义了变�
 
   - 新建一个.sh文件
   - 在文件中输入以下内容：
-  ```
-  sh [配置交叉编译工具链时建立的脚本]
-  cd [你的项目]
-  make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
-  ```
+```
+Clang:
+sh [配置交叉编译工具链时建立的脚本]
+cd [你的项目]
+make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
+GCC:
+sh [配置交叉编译工具链时建立的脚本]
+cd [你的项目]
+make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
+```
 
 3. 内核编译脚本
 
   - 新建一个.sh文件
   - 在文件中输入以下内容：
-  ```
-  sh [配置交叉编译工具链时建立的脚本]
-  cd [你的项目]
-  make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
-  ```
+```
+Clang:
+sh [配置交叉编译工具链时建立的脚本]
+cd [你的项目]
+make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+GCC:
+sh [配置交叉编译工具链时建立的脚本]
+cd [你的项目]
+make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+```
 
 ### 3.开始编译
 - 依次运行：项目清理脚本、配置文件输出脚本、内核编译脚本。完成一次完整编译
