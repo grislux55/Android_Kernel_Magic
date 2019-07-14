@@ -53,13 +53,11 @@ Clang:
 #!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
-PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- clean
 PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
 GCC:
 #!/bin/sh
 sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
-PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make ARCH=[目标内核架构] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- clean
 PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make ARCH=[目标内核架构] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
 ```
   
