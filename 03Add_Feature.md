@@ -11,9 +11,10 @@
 5. 配置git（照着上面的操作手册的安装那一章节配置就好）
 6. 配置GitKraken（官网有详细的配置方法）
 7. clone源码（可以使用git clone命令，也可以使用GitKraken软件进行clone，这里使用的是GitKraken）
+clone中
 ![克隆中](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/cloning.png)
+clone完毕
 ![克隆完毕](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/cloned.png)
-
 ### 合并其他内核的特性到当前内核
 1. 我们首先要分析要合并的特性，在本例中，我们在流念的p-miui-eas分支上进行操作（即合并其他内核的某个特性到p-miui-eas分支上，不明白什么是分支的请默默去看上面的git操作手册。），合并vantoman的内核的pwrutilx调速器。
 2. 找到你要合并的特性在哪些commit上：
@@ -23,8 +24,10 @@
 3. 按顺序合并commit：
   - 正常人都知道，一个东西要先添加在开启，所以我们认定这两个commit的关系为[开启调速器]依赖于[添加调速器]，所以我们先合并添加调速器的commit。
   - 首先我们先添加一个remote，指向vamtomkernel的地址（只要添加一次就好，后面不用再添加）
-![添加remote](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/add_remote.png)
-![添加remote中](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/adding_remote.png)
+  添加remote
+  ![添加remote](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/add_remote.png)
+  添加remote中
+  ![添加remote中](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/adding_remote.png)
   使用git的话可以使用以下命令：
   `git remote add [随便给个名字] [目标内核地址]`这条命令是添加远程仓库
   `git fetch [你之前随便给的名字]`这条命令是更新本地的远程仓库的数据
