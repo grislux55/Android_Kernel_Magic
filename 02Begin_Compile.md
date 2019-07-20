@@ -51,12 +51,10 @@ PS：不要说用环境变量，有些内核在makefile里面用`=`定义了变�
 ```
 Clang:
 #!/bin/sh
-sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make ARCH=[目标内核架构] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
 GCC:
 #!/bin/sh
-sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make ARCH=[目标内核架构] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- mrproper
 ```
@@ -73,12 +71,10 @@ PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件�
 ```
 Clang:
 #!/bin/sh
-sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
 GCC:
 #!/bin/sh
-sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make O=[输出路径（在内核项目文件夹里面的相对路径）] ARCH=[目标内核架构（请与项目清理脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- [你要编译的配置文件]
 ```
@@ -90,12 +86,10 @@ PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件�
 ```
 Clang:
 #!/bin/sh
-sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 PATH="[你的Clang编译器路径]/bin:[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=clang HOSTCC=clang CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 GCC:
 #!/bin/sh
-sh [配置交叉编译工具链时建立的脚本]
 cd [你的项目]
 PATH="[你的arm-linux-gnueabi套件路径]/bin:[你的aarch64-linux-gnu套件路径]/bin:${PATH}" make -j$(nproc --all) O=[输出路径（请与配置文件输出脚本中的输出路径保持一致）] ARCH=[目标内核架构（请与配置文件输出脚本中的目标内核架构保持一致）] CC=gcc HOSTCC=gcc CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 ```
