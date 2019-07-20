@@ -18,7 +18,7 @@ AArch64 GNU/Linux target (aarch64-linux-gnu)
 - 说明：
 > 我们在编译时使用Clang编译器与GCC的其他工具组合而成的工具链，因为这样可以减少由于Clang造成的异常。工作流程如下：
 
-![工作流程](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/compile_flow.png)
+![工作流程](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/compile_flow.png)
 
 - 解压：
 > 使用tar -Jxf [文件名]来解压.tar.xz文件（会解压到新文件夹内）
