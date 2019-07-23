@@ -81,3 +81,13 @@
   
 5. 编译内核
 6. 测试
+### 可能出现的问题
+  - 问题：
+  > GitKraken提示Inotify Error。
+
+  - 解答：
+  > Inotify是Linux的一个文件监视系统，在监视项目的时候会有加速效果，当超出这个文件监视系统的极限值的时候就会导致GitKraken在监视文件的时候性能下降。解决方法就是把极限值改大一点。
+  在/etc/sysctl.conf里面添加一行:
+  `fs.inotify.max_user_watches = 524288`
+  然后运行:
+  `sudo sysctl -p --system`
