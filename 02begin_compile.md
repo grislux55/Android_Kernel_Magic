@@ -4,7 +4,7 @@
 
 ### 1. 环境准备
 
-本次教程作者使用[Arch Linux](https://archlinux.org)上的[DDE](https://wiki.archlinux.org/title/Deepin_Desktop_Environment_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))桌面环境。
+本次教程作者使用[Arch Linux](https://archlinux.org)上的[DDE](https://wiki.archlinux.org/title/Deepin_Desktop_Environment)桌面环境。
 
 你可以使用（按字母顺序排序）：
 
