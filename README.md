@@ -16,7 +16,9 @@
 >
 > ......
 
-## [三、内核功能添加](https://jebchou.gitbook.io/android-kernel-magic/03add_feature)
+## [三、修改内核——添加](https://jebchou.gitbook.io/android-kernel-magic/03add_feature)
 
-> 我们首先要分析要合并的特性，在本例中，我们在流念的p-miui-eas分支上进行操作，合并vantoman的内核的pwrutilx调速器......
+> 这里不采用具体的设备内核，因为具体设备的情况可能会略有不同，根据情况稍微变通即可。
+>
+> 示例所采用的内核：[Android Linux Stable](https://github.com/android-linux-stable/msm-4.14)
 

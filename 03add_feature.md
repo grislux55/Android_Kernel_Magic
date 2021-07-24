@@ -1,99 +1,134 @@
-# 三、内核功能添加
+# 三、修改内核——添加
 
 ## 准备步骤
 
-`本次教程使用的是Deepin，理论上Ubuntu和Debian都能用。另外，为了这个教程，我特地又装了一次Deepin，都给我泪目！` 1. `Linux`系统 x1（当然你想要更多系统也随你便） 2. `GitKraken`软件 x1 [下载地址](https://www.gitkraken.com/download)（因为它在Linux系统下表现较好，当然如果你要使用其他的git GUI软件甚至是git本身都是可以的） 3. 内核源码 x1 （这里会使用[流念](https://github.com/wloot)和[Vantoman](https://github.com/vantoman)的内核做示例（感谢这两位大佬）） 4. git操作手册，用于查询一些基本命令的详细用法。（这里推荐[廖雪峰](https://www.liaoxuefeng.com/wiki/896043488029600)大佬的。） 5. 配置git（照着上面的操作手册的安装那一章节配置就好） 6. 配置GitKraken（官网有详细的配置方法） 7. clone源码（可以使用git clone命令，也可以使用GitKraken软件进行clone，这里使用的是GitKraken）
+#### 1. 一个内核
 
-clone中
+这里不采用具体的设备内核，因为具体设备的情况可能会略有不同，根据情况稍微变通即可。
 
-![&#x514B;&#x9686;&#x4E2D;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/cloning.png)
+示例所采用的内核：[Android Linux Stable](https://github.com/android-linux-stable/msm-4.14)
 
-clone完毕
+将内核Clone下来：
 
-![&#x514B;&#x9686;&#x5B8C;&#x6BD5;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/cloned.png)
+<img src="03add_feature.assets/git_clone.png" alt="git_clone" style="zoom: 80%;" />
 
-## 合并其他内核的特性到当前内核
+#### 2. 另一个内核（或者别的为内核提供功能的补丁集之类的）
 
-1. 我们首先要分析要合并的特性，在本例中，我们在流念的p-miui-eas分支上进行操作（即合并其他内核的某个特性到p-miui-eas分支上，不明白什么是分支的请默默去看上面的git操作手册。），合并vantoman的内核的pwrutilx调速器。
-2. 找到你要合并的特性在哪些commit上：
+这里采用著名的内核开发者[Sultan Alsawaf](https://github.com/kerneltoast)的[simple_lmk](https://github.com/kerneltoast/simple_lmk)，为了匹配内核版本，我们选择4.14分支
 
-   * 先在vamtonkernel中搜索带pwrutilx的commit
+<img src="03add_feature.assets/select_branch.png" alt="image-20210724211347504" style="zoom:67%;" />
 
-   ![&#x641C;&#x7D22;commit](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/search_commit.png)
+## 分析
 
-   * 我们找到了一个添加pwrutilx调速器的commit和一个开启pwrutilx调速器的commit。
+#### 1. 查看提交
 
-3. 按顺序合并commit：
+点击commits数，查看以时间排序的提交：
 
-   * 正常人都知道，一个东西要先添加在开启，所以我们认定这两个commit的关系为\[开启调速器\]依赖于\[添加调速器\]，所以我们先合并添加调速器的commit。
-   * 首先我们先添加一个remote，指向vamtomkernel的地址（只要添加一次就好，后面不用再添加）
+![image-20210724211530968](03add_feature.assets/forward_to_commits.png)
 
-   添加remote
+#### 2. 分析提交
 
-   ![&#x6DFB;&#x52A0;remote](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/add_remote.png)
+根据提交说明，我们定位到了这一次要操作的主角：
 
-   添加remote中
+![image-20210724211821262](03add_feature.assets/whereis_simple_lmk.png)
 
-   ![&#x6DFB;&#x52A0;remote&#x4E2D;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/adding_remote.png)
+## 提取并应用补丁
 
-   使用git的话可以使用以下命令： `git remote add [随便给个名字] [目标内核地址]`这条命令是添加远程仓库 `git fetch [你之前随便给的名字]`这条命令是更新本地的远程仓库的数据
+#### 1. 下载补丁
 
-   * 添加完以后就像这样：
+Github为我们提供了一种快速地获取提交的补丁的方法——在网址的最后加上.patch：
 
-   ![&#x6DFB;&#x52A0;&#x5B8C;&#x4EE5;&#x540E;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/added_remote.png)
+![image-20210724212249733](03add_feature.assets/url_to_patch.png)
 
-   * 我们开始合并这两个commit，由于GitKraken显示问题，过于古老的commit可能会找不到，所以这里添加commit我们要使用一下git
+当然也有一个TamperMonkey脚本适用于这种情况：[Github_Commit_Diff](https://github.com/jerone/UserScripts/tree/master/Github_Commit_Diff#readme)
 
-     使用`git cherry-pick [对应commit的特征码]`来添加commit即可，第二个commit如法炮制。
+接下来我们将补丁下载下来，或者复制下来，放到一个文件里去。
 
-   * 如果一切正常，应该不会提示任何错误，那么第四步就可以不看了。
+>   *在本教程中，我将patch放在内核的上级目录中，命名为simple_lmk.patch，如果你的文件路径或命名不一样，请记得将命令修改成对应的命令*
 
-4. 出现冲突
+#### 2. 使用am以在不改变Authorship的情况下应用补丁
 
-   * 如果出现了类似以下错误的错误，那么就说明出现了冲突，打开GitKraken，软件会自动侦测到冲突
+>   Authorship，即软件著作权。由于这些补丁并不是属于你的原创补丁，请一定一定不要破坏别人的著作权，很多人对此非常看重，随意破坏别人的著作权是非常不尊重人的行为！
 
-     \`error: 不能应用 eda7bb4f3bea... Add PWRUTILX EAS Sched
+执行命令：
 
-     提示：冲突解决完毕后，用 'git add &lt;路径&gt;' 或 'git rm &lt;路径&gt;'
+```bash
+git am ../simple_lmk.patch
+```
 
-     提示：对修正后的文件做标记，然后用 'git commit' 提交\`
+![image-20210724213355119](03add_feature.assets/use_git_am.png)
 
-   ![&#x4FA6;&#x6D4B;&#x5230;&#x51B2;&#x7A81;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/found_conflict.png)
+oh！出问题了。
 
-   * 点击View Conflict进入处理冲突界面
+为什么会出现这样的情况呢？
 
-   ![&#x51B2;&#x7A81;&#x754C;&#x9762;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/conflict.png)
+我们回到Git生成的patch的格式来。
 
-   * 不要点击mark resolved或mark all resolved，这是将冲突文件标记为已解决的意思。我们直接点击文件，这里只有一个冲突文件，所以开始解决这个冲突。
+![image-20210724213546863](03add_feature.assets/git_patch_format.png)
 
-   ![&#x8FDB;&#x5165;&#x51B2;&#x7A81;&#x89E3;&#x51B3;&#x754C;&#x9762;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/makefile_conflict.png)
+可以看到，Git在此处记录了更改的文件，紧跟其后使用了一个@@，声明了它要搜索的内容，然后在其后使用-或者+表示要更改的内容。
 
-   * 解释一下这个界面，左边这个窗口是当前在p-miui-eas分支上的文件现状，右边是这个commit文件中的内容，下方是输出文件，点击高亮代码行的左边的加号将你所需要的代码添加到输出中。
+问题就出在这里！
 
-   ![&#x51B2;&#x7A81;&#x5DF2;&#x89E3;&#x51B3;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/resolved.png)
+出于某些原因，Git要搜索的内容被本地仓库中已有的更新的提交给覆盖掉了，所以我们要手动模拟Git打patch的行为，去做出打好patch的文件。
 
-   * 双击save按钮保存，自动回到上级页面，现在没有冲突了。
+#### 3. 使用apply
 
-   ![&#x51B2;&#x7A81;&#x89E3;&#x51B3;&#x540E;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/no_conflict.png)
+首先要注意到一个事，那就是在只有某一部分的patch不能被Git正确应用的时候，Git依旧会阻止我们应用整个patch，所以我们应该使用apply将可以应用的patch先应用上。
 
-   * 杜撰一下你的更改，方便以后查log
+命令如下（--reject代表将冲突的放在另一个文件里，先把没有错误的应用上）：
 
-   ![&#x66F4;&#x6539;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/commit.png)
+```bash
+git apply --reject ../simple_lmk.patch
+```
 
-   * 点击commit change提交更改
+![image-20210724230859126](03add_feature.assets/apply_reject.png)
 
-   ![&#x66F4;&#x6539;&#x5DF2;&#x63D0;&#x4EA4;](https://raw.githubusercontent.com/grislux55/Android_Kernel_Magic/master/images/commited.png)
+可以看到我们只有一个片段被阻止了。
 
-5. 编译内核
-6. 测试
+使用
 
-   **可能出现的问题**
+```bash
+git status
+```
 
-   * 问题：
+查看详情：
 
-     > GitKraken提示Inotify Error。
+![image-20210724231041540](03add_feature.assets/rejected.png)
 
-   * 解答：
+这里的.rej结尾的文件就是没有应用上的补丁，这里需要我们手动应用。
 
-     > Inotify是Linux的一个文件监视系统，在监视项目的时候会有加速效果，当超出这个文件监视系统的极限值的时候就会导致GitKraken在监视文件的时候性能下降。解决方法就是把极限值改大一点。 在/etc/sysctl.conf里面添加一行: `fs.inotify.max_user_watches = 524288` 然后运行: `sudo sysctl -p --system`
+#### 4. 修复冲突
+
+使用你的文本编辑器查看.rej结尾的文件内容：
+
+![image-20210724231330043](03add_feature.assets/rejected_hunks.png)
+
+意思很显然，在`mm/vmscan.c`的`#include <linux/psi.h>`后面加一行`#include <linux/simple_lmk.h>`
+
+为什么会出错呢？
+
+仔细观察可以发现，在原来的`mm/vmscan.c`里面没有`#include <linux/psi.h>`，所以Git也就找不到要在哪里插入了。
+
+由于`#include`指令的特性，在头部的位置并不会影响效果，所以直接找个地方扔进去就是。
+
+#### 5. 清理并提交
+
+应用完所有的patch之后，我们清理掉生成的.rej文件，然后使用
+
+```bash
+git add . && git am --continue
+```
+
+来应用所有更改。
+
+## 后处理
+
+simple_lmk在这里是不是就已经添加好了呢？
+
+并没有，simple_lmk并不是单个commit组成的，它还有很多的后续修复，应该将它们一一下载下来打上去。
+
+同时，仅仅将功能添加到内核上是不够的，某些功能只是提供了开关，要启用它们，需要在你的设备的配置文件中启用它们。
+
+通过形如[启用slmk](https://github.com/kerneltoast/android_kernel_google_wahoo/commit/44aaacc5491fc4a350dcc91882287d468212c85b#diff-725dee1b5969e869d347d824338588038e684a18c72a5e7afd1fe76c296618ec)的更改，来为你要编译的内核启用这些功能。
 
